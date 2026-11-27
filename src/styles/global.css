@@ -1,18 +1,8 @@
 body {
   font-family: var(--font-sans);
-  font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+  font-size: clamp(0.9375rem, 0.9rem + 0.12vw, 1rem);
   color: var(--color-text);
   background-color: var(--color-bg);
-  background-image:
-    radial-gradient(
-      circle at 50% 0%,
-      color-mix(in srgb, var(--era-accent) 12%, transparent),
-      transparent 55%
-    ),
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-  background-size: 100% 100%, 36px 36px, 36px 36px;
-  transition: background-image 300ms ease;
 }
 
 #root {
@@ -22,7 +12,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--era-accent);
+  outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
 
@@ -34,14 +24,14 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
 
 .app-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
 
 .machine-workspace {
@@ -49,6 +39,10 @@ body {
   grid-template-columns: 1fr;
   gap: var(--space-lg);
   align-items: start;
+}
+
+.machine-workspace.is-expanded {
+  grid-template-columns: 1fr;
 }
 
 @media (min-width: 768px) {
@@ -59,7 +53,11 @@ body {
 
 @media (min-width: 1024px) {
   .machine-workspace {
-    grid-template-columns: 340px minmax(0, 1fr);
+    grid-template-columns: 290px minmax(0, 1fr);
     gap: var(--space-xl);
+  }
+
+  .machine-workspace.is-expanded {
+    grid-template-columns: 1fr;
   }
 }

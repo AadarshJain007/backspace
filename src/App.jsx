@@ -5,23 +5,71 @@ import IntroExperience from './components/IntroExperience.jsx';
 import YearSelector from './components/YearSelector.jsx';
 import Timeline from './components/Timeline.jsx';
 import EraIndicator from './components/EraIndicator.jsx';
+import BrowserShell from './browser/BrowserShell.jsx';
 import BrowserViewport from './browser/BrowserViewport.jsx';
 
 function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [history, setHistory] = useState([0]);
+  const [historyPointer, setHistoryPointer] = useState(0);
   const [showIntro, setShowIntro] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
 
+  const currentIndex = history[historyPointer];
   const currentEra = ERAS[currentIndex];
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < ERAS.length - 1;
 
+  const canGoBack = historyPointer > 0;
+  const canGoForward = historyPointer < history.length - 1;
+
+  const navigateToEra = useCallback(
+    (nextIndex) => {
+      if (nextIndex === currentIndex) return;
+      setHistory((prev) => {
+        const sliced = prev.slice(0, historyPointer + 1);
+        return [...sliced, nextIndex];
+      });
+      setHistoryPointer((prev) => prev + 1);
+      setIsMinimized(false);
+    },
+    [currentIndex, historyPointer]
+  );
+
   const goPrev = useCallback(() => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1));
-  }, []);
+    if (currentIndex > 0) {
+      navigateToEra(currentIndex - 1);
+    }
+  }, [currentIndex, navigateToEra]);
 
   const goNext = useCallback(() => {
-    setCurrentIndex((prev) => Math.min(ERAS.length - 1, prev + 1));
+    if (currentIndex < ERAS.length - 1) {
+      navigateToEra(currentIndex + 1);
+    }
+  }, [currentIndex, navigateToEra]);
+
+  const handleBrowserBack = useCallback(() => {
+    if (canGoBack) {
+      setHistoryPointer((prev) => prev - 1);
+    }
+  }, [canGoBack]);
+
+  const handleBrowserForward = useCallback(() => {
+    if (canGoForward) {
+      setHistoryPointer((prev) => prev + 1);
+    }
+  }, [canGoForward]);
+
+  const handleRefresh = useCallback(() => {
+    setIsRefreshing(true);
   }, []);
+
+  useEffect(() => {
+    if (!isRefreshing) return;
+    const timer = setTimeout(() => setIsRefreshing(false), 450);
+    return () => clearTimeout(timer);
+  }, [isRefreshing]);
 
   useEffect(() => {
     document.documentElement.style.setProperty('--era-accent', currentEra.accent);
@@ -71,16 +119,35 @@ function App() {
         <Timeline
           eras={ERAS}
           currentIndex={currentIndex}
-          onSelectEra={setCurrentIndex}
+          onSelectEra={navigateToEra}
         />
 
-        <div className="machine-workspace">
-          <EraIndicator
+        <div
+          className={`machine-workspace ${isExpanded ? 'is-expanded' : ''}`}
+        >
+          {!isExpanded && (
+            <EraIndicator
+              era={currentEra}
+              currentIndex={currentIndex}
+              totalCount={ERAS.length}
+            />
+          )}
+
+          <BrowserShell
             era={currentEra}
-            currentIndex={currentIndex}
-            totalCount={ERAS.length}
-          />
-          <BrowserViewport era={currentEra} />
+            canGoBack={canGoBack}
+            canGoForward={canGoForward}
+            onBack={handleBrowserBack}
+            onForward={handleBrowserForward}
+            onRefresh={handleRefresh}
+            isLoading={isRefreshing}
+            isExpanded={isExpanded}
+            onToggleExpand={() => setIsExpanded((prev) => !prev)}
+            isMinimized={isMinimized}
+            onToggleMinimize={() => setIsMinimized((prev) => !prev)}
+          >
+            <BrowserViewport era={currentEra} isLoading={isRefreshing} />
+          </BrowserShell>
         </div>
       </main>
     </div>

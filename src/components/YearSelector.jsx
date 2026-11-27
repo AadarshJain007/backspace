@@ -17,11 +17,10 @@ function YearSelector({
         aria-label="Previous era"
       >
         <span aria-hidden="true">←</span>
-        <span className="bs-step-label">PREV</span>
+        <span className="bs-step-label">Prev</span>
       </button>
 
       <div className="bs-year-readout">
-        <span className="bs-year-kicker">TEMPORAL COORDINATE</span>
         <h1 className="bs-year-value">{era.year}</h1>
         <p className="bs-year-era-name">{era.title}</p>
       </div>
@@ -33,7 +32,7 @@ function YearSelector({
         disabled={!hasNext}
         aria-label="Next era"
       >
-        <span className="bs-step-label">NEXT</span>
+        <span className="bs-step-label">Next</span>
         <span aria-hidden="true">→</span>
       </button>
     </section>

@@ -11,6 +11,13 @@ export const ERAS = [
     url: 'http://home.netscape.com/welcome.html',
     accent: '#38bdf8',
     chromeStyle: 'classic',
+    browserConfig: {
+      windowTitle: 'Netscape - [Welcome to Netscape]',
+      addressLabel: 'Location:',
+      backLabel: 'Back',
+      forwardLabel: 'Forward',
+      refreshLabel: 'Reload',
+    },
     traits: [
       'Default #C0C0C0 backgrounds with unstyled Times New Roman',
       'Blue #0000FF underlined hyperlinks and visited purple links',
@@ -34,6 +41,13 @@ export const ERAS = [
     url: 'http://www.geocities.com/siliconvalley/park/2000/',
     accent: '#facc15',
     chromeStyle: 'beveled',
+    browserConfig: {
+      windowTitle: 'GeoCities Millennium Portal - Microsoft Internet Explorer',
+      addressLabel: 'Address',
+      backLabel: '← Back',
+      forwardLabel: '→',
+      refreshLabel: '↻',
+    },
     traits: [
       'Nested <table> grids, spacer GIFs, and beveled 3D buttons',
       'Visitor hit counters, guestbooks, and "Best viewed in 800×600" badges',
@@ -42,7 +56,7 @@ export const ERAS = [
     preview: {
       heading: 'Enter the Millennium Portal',
       body: 'Every brand and hobbyist builds a custom corner of cyberspace. Framesets split the screen while marquee banners and MIDI loops greet every visitor.',
-      status: 'Transferring data from www.geocities.com...',
+      status: 'Done · Internet Zone',
     },
   },
   {
@@ -57,6 +71,13 @@ export const ERAS = [
     url: 'http://del.icio.us/popular/web2.0',
     accent: '#fb923c',
     chromeStyle: 'glossy',
+    browserConfig: {
+      windowTitle: 'del.icio.us / popular — Mozilla Firefox',
+      addressLabel: '',
+      backLabel: '◀',
+      forwardLabel: '▶',
+      refreshLabel: '⟳',
+    },
     traits: [
       'Asynchronous updates without full page reloads via XMLHttpRequest',
       'Reflections, pastel gradients, "BETA" ribbons, and RSS feed icons',
@@ -80,6 +101,13 @@ export const ERAS = [
     url: 'https://instagr.am/explore/',
     accent: '#34d399',
     chromeStyle: 'skeuomorphic',
+    browserConfig: {
+      windowTitle: 'Explore — Safari',
+      addressLabel: '',
+      backLabel: '◀',
+      forwardLabel: '▶',
+      refreshLabel: '↻',
+    },
     traits: [
       'Stitched leather, brushed metal, and realistic drop shadows',
       'jQuery plugins powering carousels, lightboxes, and smooth fades',
@@ -103,6 +131,13 @@ export const ERAS = [
     url: 'https://medium.com/tag/design',
     accent: '#60a5fa',
     chromeStyle: 'flat',
+    browserConfig: {
+      windowTitle: 'Design — Medium',
+      addressLabel: '',
+      backLabel: '←',
+      forwardLabel: '→',
+      refreshLabel: '↻',
+    },
     traits: [
       'Elimination of textures in favor of bold typography and flat color',
       'Component-driven SPAs built with React, Angular, and Flexbox',
@@ -126,6 +161,13 @@ export const ERAS = [
     url: 'https://linear.app/roadmap',
     accent: '#a78bfa',
     chromeStyle: 'modern-dark',
+    browserConfig: {
+      windowTitle: 'Linear — Roadmap',
+      addressLabel: '',
+      backLabel: '←',
+      forwardLabel: '→',
+      refreshLabel: '↻',
+    },
     traits: [
       'System-synced dark themes with subtle 1px translucent borders',
       'Spring physics, ⌘K command menus, and CSS Grid layouts',
@@ -149,6 +191,13 @@ export const ERAS = [
     url: 'https://backspace.archive/2026',
     accent: '#2dd4bf',
     chromeStyle: 'ambient',
+    browserConfig: {
+      windowTitle: 'BACKSPACE // 2026 Ambient Canvas',
+      addressLabel: '',
+      backLabel: '←',
+      forwardLabel: '→',
+      refreshLabel: '↻',
+    },
     traits: [
       'Native View Transitions API and container-aware responsive components',
       'Collaborative, real-time surfaces blended with local-first state',
@@ -172,6 +221,13 @@ export const ERAS = [
     url: 'archive://future.web/horizon',
     accent: '#f472b6',
     chromeStyle: 'future',
+    browserConfig: {
+      windowTitle: 'HORIZON // MESH LENS',
+      addressLabel: 'INTENT:',
+      backLabel: '‹',
+      forwardLabel: '›',
+      refreshLabel: '◎',
+    },
     traits: [
       'Zero-chrome surfaces materialized on demand from user intent',
       'Spatial depth, voice-and-gaze choreography, and shared memory',

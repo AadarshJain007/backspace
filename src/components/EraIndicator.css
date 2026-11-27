@@ -17,12 +17,11 @@
 }
 
 .bs-era-pill {
-  padding: 0.2rem 0.5rem;
-  border: 1px solid color-mix(in srgb, var(--era-accent) 60%, transparent);
-  border-radius: 3px;
-  color: var(--era-accent);
-  background: color-mix(in srgb, var(--era-accent) 10%, transparent);
-  letter-spacing: 0.1em;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-weight: 700;
 }
 
 .bs-era-index {
@@ -30,24 +29,24 @@
 }
 
 .bs-era-title {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
   line-height: 1.25;
 }
 
 .bs-era-tagline {
   color: var(--color-text-muted);
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   line-height: 1.5;
 }
 
 .bs-era-specs {
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-  padding-block: var(--space-md);
+  padding-block: 0.85rem;
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 .bs-spec-row {
@@ -58,9 +57,7 @@
 }
 
 .bs-spec-row dt {
-  font-family: var(--font-mono);
   color: var(--color-text-muted);
-  letter-spacing: 0.06em;
 }
 
 .bs-spec-row dd {
@@ -72,13 +69,14 @@
 .bs-era-traits {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .bs-traits-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--color-text-muted);
 }
 
@@ -86,7 +84,7 @@
   padding-left: 1.1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.4rem;
   font-size: 0.875rem;
   color: var(--color-text-muted);
 }

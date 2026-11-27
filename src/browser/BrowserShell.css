@@ -1,0 +1,392 @@
+.bs-shell {
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 460px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  transition: border-color 200ms ease, box-shadow 200ms ease,
+    border-radius 200ms ease;
+}
+
+.bs-shell.is-minimized {
+  min-height: 0;
+}
+
+.bs-shell-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0.5rem var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+}
+
+.bs-shell-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.bs-shell-era-badge {
+  flex-shrink: 0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--era-accent);
+  background: color-mix(in srgb, var(--era-accent) 14%, transparent);
+}
+
+.bs-shell-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bs-shell-win-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.bs-win-btn {
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.45rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.bs-win-btn:hover {
+  color: var(--era-accent);
+  border-color: var(--era-accent);
+}
+
+.bs-shell-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.bs-shell-nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.bs-nav-btn {
+  padding: 0.3rem 0.55rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.1;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color 150ms ease, color 150ms ease, opacity 150ms ease;
+}
+
+.bs-nav-btn:hover:not(:disabled) {
+  border-color: var(--era-accent);
+  color: var(--era-accent);
+}
+
+.bs-nav-btn:disabled {
+  opacity: 0.32;
+  cursor: not-allowed;
+}
+
+.bs-nav-btn.is-spinning {
+  color: var(--era-accent);
+  border-color: var(--era-accent);
+}
+
+.bs-shell-address {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  overflow: hidden;
+}
+
+.bs-address-label {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+}
+
+.bs-protocol-tag {
+  flex-shrink: 0;
+  padding: 0.08rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.6875rem;
+  color: var(--era-accent);
+  background: color-mix(in srgb, var(--era-accent) 14%, transparent);
+}
+
+.bs-url-text {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bs-shell-res {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.bs-shell-progress {
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.bs-shell-progress.is-active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: var(--era-accent);
+  animation: bs-loading-slide 450ms ease-in-out infinite;
+}
+
+@keyframes bs-loading-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(260%);
+  }
+}
+
+.bs-shell-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bs-shell-statusbar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0.42rem var(--space-md);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.bs-shell--classic {
+  border-radius: 0;
+  border: 2px outset #d4d0c8;
+  background: #c0c0c0;
+  color: #111;
+}
+
+.bs-shell--classic .bs-shell-topbar {
+  background: #000080;
+  color: #fff;
+  border-bottom: 1px solid #808080;
+}
+
+.bs-shell--classic .bs-shell-era-badge {
+  background: #c0c0c0;
+  color: #000080;
+  border-radius: 0;
+}
+
+.bs-shell--classic .bs-shell-toolbar,
+.bs-shell--classic .bs-shell-statusbar {
+  background: #c0c0c0;
+  color: #111;
+  border-color: #808080;
+}
+
+.bs-shell--classic .bs-nav-btn,
+.bs-shell--classic .bs-win-btn {
+  border-radius: 0;
+  border: 2px outset #dfdfdf;
+  background: #c0c0c0;
+  color: #111;
+}
+
+.bs-shell--classic .bs-shell-address {
+  border-radius: 0;
+  border: 2px inset #808080;
+  background: #fff;
+  color: #111;
+}
+
+.bs-shell--classic .bs-url-text,
+.bs-shell--classic .bs-address-label {
+  color: #111;
+}
+
+.bs-shell--classic .bs-protocol-tag {
+  background: #e5e5e5;
+  color: #000080;
+  border-radius: 0;
+}
+
+.bs-shell--beveled {
+  border-radius: 2px;
+  border: 2px outset #ece9d8;
+  background: #d4d0c8;
+  color: #111;
+}
+
+.bs-shell--beveled .bs-shell-topbar {
+  background: linear-gradient(90deg, #0a246a, #a6caf0);
+  color: #fff;
+  border-bottom: 1px solid #808080;
+}
+
+.bs-shell--beveled .bs-shell-toolbar,
+.bs-shell--beveled .bs-shell-statusbar {
+  background: #d4d0c8;
+  color: #111;
+  border-color: #9e9a91;
+}
+
+.bs-shell--beveled .bs-nav-btn,
+.bs-shell--beveled .bs-win-btn {
+  border-radius: 2px;
+  border: 1px outset #fff;
+  background: #ece9d8;
+  color: #111;
+}
+
+.bs-shell--beveled .bs-shell-address {
+  border-radius: 0;
+  border: 1px inset #808080;
+  background: #fff;
+}
+
+.bs-shell--beveled .bs-url-text,
+.bs-shell--beveled .bs-address-label {
+  color: #111;
+}
+
+.bs-shell--glossy .bs-shell-topbar {
+  background: linear-gradient(180deg, #3b4454, #262c37);
+  border-bottom-color: #1c2029;
+}
+
+.bs-shell--glossy .bs-shell-toolbar {
+  background: linear-gradient(180deg, #2d3442, #222731);
+}
+
+.bs-shell--glossy .bs-shell-address {
+  border-radius: 999px;
+  background: #14171d;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.bs-shell--glossy .bs-nav-btn {
+  border-radius: 999px;
+  background: linear-gradient(180deg, #3a4252, #252b36);
+}
+
+.bs-shell--skeuomorphic .bs-shell-topbar {
+  background: linear-gradient(180deg, #3a3d42, #27292d);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.bs-shell--skeuomorphic .bs-shell-toolbar {
+  background: linear-gradient(180deg, #2b2e33, #202226);
+}
+
+.bs-shell--skeuomorphic .bs-nav-btn {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.bs-shell--flat {
+  border-radius: 6px;
+  border-color: #2f3542;
+}
+
+.bs-shell--flat .bs-shell-topbar {
+  background: #1d2129;
+}
+
+.bs-shell--flat .bs-shell-toolbar {
+  background: #232832;
+}
+
+.bs-shell--flat .bs-shell-address {
+  border-radius: 2px;
+  border-color: transparent;
+  background: #161920;
+}
+
+.bs-shell--ambient {
+  border-radius: 14px;
+  border-color: color-mix(in srgb, var(--era-accent) 35%, transparent);
+}
+
+.bs-shell--ambient .bs-shell-topbar,
+.bs-shell--ambient .bs-shell-toolbar {
+  background: rgba(18, 22, 28, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.bs-shell--ambient .bs-shell-address {
+  border-radius: 999px;
+}
+
+.bs-shell--future {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--era-accent) 55%, transparent);
+  background: rgba(8, 9, 14, 0.85);
+}
+
+.bs-shell--future .bs-shell-topbar,
+.bs-shell--future .bs-shell-toolbar,
+.bs-shell--future .bs-shell-statusbar {
+  background: transparent;
+  border-style: dashed;
+}
+
+.bs-shell--future .bs-shell-address {
+  border-style: dashed;
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .bs-shell-res {
+    display: block;
+  }
+}

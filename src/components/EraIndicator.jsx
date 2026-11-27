@@ -4,10 +4,9 @@ function EraIndicator({ era, currentIndex, totalCount }) {
   return (
     <aside className="bs-era-indicator" aria-label="Current era details">
       <div className="bs-era-badge-row">
-        <span className="bs-era-pill">ACTIVE ERA</span>
+        <span className="bs-era-pill">{era.year}</span>
         <span className="bs-era-index">
-          #{String(currentIndex + 1).padStart(2, '0')} /{' '}
-          {String(totalCount).padStart(2, '0')}
+          {currentIndex + 1} of {totalCount}
         </span>
       </div>
 
@@ -16,25 +15,25 @@ function EraIndicator({ era, currentIndex, totalCount }) {
 
       <dl className="bs-era-specs">
         <div className="bs-spec-row">
-          <dt>BROWSER</dt>
+          <dt>Browser</dt>
           <dd>{era.browser}</dd>
         </div>
         <div className="bs-spec-row">
-          <dt>PROTOCOL</dt>
+          <dt>Protocol</dt>
           <dd>{era.protocol}</dd>
         </div>
         <div className="bs-spec-row">
-          <dt>VIEWPORT</dt>
+          <dt>Viewport</dt>
           <dd>{era.resolution}</dd>
         </div>
         <div className="bs-spec-row">
-          <dt>LINK SPEED</dt>
+          <dt>Connection</dt>
           <dd>{era.bandwidth}</dd>
         </div>
       </dl>
 
       <div className="bs-era-traits">
-        <span className="bs-traits-label">DEFINING SIGNALS</span>
+        <span className="bs-traits-label">What defined this era</span>
         <ul>
           {era.traits.map((trait) => (
             <li key={trait}>{trait}</li>
