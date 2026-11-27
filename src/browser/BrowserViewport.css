@@ -1,0 +1,154 @@
+.bs-browser {
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 430px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.bs-browser-chrome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+}
+
+.bs-browser-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bs-ctrl {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.bs-browser-address {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  overflow: hidden;
+}
+
+.bs-protocol-tag {
+  flex-shrink: 0;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.6875rem;
+  color: var(--era-accent);
+  background: color-mix(in srgb, var(--era-accent) 14%, transparent);
+}
+
+.bs-url-text {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bs-browser-res {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.bs-browser-stage {
+  flex: 1;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      color-mix(in srgb, var(--era-accent) 8%, transparent),
+      transparent 50%
+    ),
+    var(--color-bg);
+}
+
+.bs-stage-label {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.bs-stage-canvas {
+  flex: 1;
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.bs-stage-year-stamp {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--era-accent);
+}
+
+.bs-stage-heading {
+  font-size: clamp(1.35rem, 1.1rem + 1vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.bs-stage-body {
+  max-width: 58ch;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.bs-browser-statusbar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0.45rem var(--space-md);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.bs-browser--classic .bs-browser-chrome,
+.bs-browser--beveled .bs-browser-chrome {
+  border-bottom-width: 2px;
+}
+
+.bs-browser--future .bs-browser-chrome {
+  background: transparent;
+  border-bottom-style: dashed;
+}
+
+@media (min-width: 768px) {
+  .bs-browser-res {
+    display: block;
+  }
+}

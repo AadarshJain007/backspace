@@ -1,0 +1,77 @@
+.bs-year-selector {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    180deg,
+    var(--color-surface-elevated),
+    var(--color-surface)
+  );
+}
+
+.bs-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  background: var(--color-bg);
+  transition: border-color 150ms ease, color 150ms ease, opacity 150ms ease;
+}
+
+.bs-step-btn:hover:not(:disabled) {
+  border-color: var(--era-accent);
+  color: var(--era-accent);
+}
+
+.bs-step-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.bs-step-label {
+  display: none;
+}
+
+.bs-year-readout {
+  text-align: center;
+}
+
+.bs-year-kicker {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+}
+
+.bs-year-value {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: clamp(2.25rem, 1.8rem + 2.5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: var(--era-accent);
+  text-shadow: 0 0 28px color-mix(in srgb, var(--era-accent) 30%, transparent);
+}
+
+.bs-year-era-name {
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
+  color: var(--color-text);
+}
+
+@media (min-width: 640px) {
+  .bs-step-label {
+    display: inline;
+  }
+}
