@@ -13,6 +13,8 @@ function App() {
   const [historyPointer, setHistoryPointer] = useState(0);
   const [showIntro, setShowIntro] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [refreshTick, setRefreshTick] = useState(0);
+  const [customUrl, setCustomUrl] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
@@ -63,7 +65,12 @@ function App() {
 
   const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
+    setRefreshTick((prev) => prev + 1);
   }, []);
+
+  useEffect(() => {
+    setCustomUrl(null);
+  }, [currentEra.id]);
 
   useEffect(() => {
     if (!isRefreshing) return;
@@ -135,6 +142,7 @@ function App() {
 
           <BrowserShell
             era={currentEra}
+            displayUrl={customUrl}
             canGoBack={canGoBack}
             canGoForward={canGoForward}
             onBack={handleBrowserBack}
@@ -146,7 +154,12 @@ function App() {
             isMinimized={isMinimized}
             onToggleMinimize={() => setIsMinimized((prev) => !prev)}
           >
-            <BrowserViewport era={currentEra} isLoading={isRefreshing} />
+            <BrowserViewport
+              era={currentEra}
+              isLoading={isRefreshing}
+              refreshTick={refreshTick}
+              onUrlChange={setCustomUrl}
+            />
           </BrowserShell>
         </div>
       </main>

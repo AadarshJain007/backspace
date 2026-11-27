@@ -1,6 +1,17 @@
+import Era1995 from '../eras/era1995/Era1995.jsx';
 import './BrowserViewport.css';
 
-function BrowserViewport({ era, isLoading }) {
+function BrowserViewport({ era, isLoading, refreshTick, onUrlChange }) {
+  if (era.id === '1995') {
+    return (
+      <Era1995
+        isLoading={isLoading}
+        refreshTick={refreshTick}
+        onUrlChange={onUrlChange}
+      />
+    );
+  }
+
   return (
     <div className={`bs-stage bs-stage--${era.chromeStyle}`}>
       <div className="bs-stage-label">

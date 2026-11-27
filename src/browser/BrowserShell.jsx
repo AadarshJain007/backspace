@@ -2,6 +2,7 @@ import './BrowserShell.css';
 
 function BrowserShell({
   era,
+  displayUrl,
   canGoBack,
   canGoForward,
   onBack,
@@ -16,6 +17,7 @@ function BrowserShell({
 }) {
   const config = era.browserConfig || {};
   const chromeStyle = era.chromeStyle || 'modern-dark';
+  const activeUrl = displayUrl || era.url;
 
   return (
     <section
@@ -96,7 +98,7 @@ function BrowserShell({
                 <span className="bs-address-label">{config.addressLabel}</span>
               )}
               <span className="bs-protocol-tag">{era.protocol}</span>
-              <span className="bs-url-text">{era.url}</span>
+              <span className="bs-url-text">{activeUrl}</span>
             </div>
 
             <div className="bs-shell-res">{era.resolution}</div>
