@@ -1,4 +1,6 @@
 import Era1995 from '../eras/era1995/Era1995.jsx';
+import Era2000 from '../eras/era2000/Era2000.jsx';
+import Era2005 from '../eras/era2005/Era2005.jsx';
 import './BrowserViewport.css';
 
 function BrowserViewport({ era, isLoading, refreshTick, onUrlChange }) {
@@ -10,6 +12,14 @@ function BrowserViewport({ era, isLoading, refreshTick, onUrlChange }) {
         onUrlChange={onUrlChange}
       />
     );
+  }
+
+  if (era.id === '2000') {
+    return <Era2000 isLoading={isLoading} onUrlChange={onUrlChange} />;
+  }
+
+  if (era.id === '2005') {
+    return <Era2005 isLoading={isLoading} onUrlChange={onUrlChange} />;
   }
 
   return (
