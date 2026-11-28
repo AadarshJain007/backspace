@@ -1,29 +1,192 @@
 :root {
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  --font-os: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --desktop-bg: #008080;
+  --desktop-fg: #ffffff;
+  --win-bg: #c0c0c0;
+  --win-fg: #000000;
+  --win-border: #dfdfdf;
+  --win-border-dark: #404040;
+  --win-radius: 0px;
+  --win-shadow: 2px 2px 0 rgba(0, 0, 0, 0.45);
+  --win-blur: none;
+  --title-bg: #000080;
+  --title-fg: #ffffff;
+  --traffic-display: none;
+  --win-controls-display: flex;
+  --bar-bg: #c0c0c0;
+  --input-bg: #ffffff;
+  --input-fg: #000000;
+  --taskbar-bg: #c0c0c0;
+  --taskbar-fg: #000000;
+  --taskbar-radius: 0px;
+  --taskbar-bottom: 0px;
+  --taskbar-width: 100%;
+  --start-bg: #c0c0c0;
+  --start-fg: #000000;
+  --start-radius: 0px;
+  --accent: #000080;
+  --accent-fg: #ffffff;
+  --bevel-light: #ffffff;
+  --bevel-dark: #808080;
+  --era-accent: #000080;
+}
 
-  --color-bg: #f4f1ea;
-  --color-surface: #faf8f4;
-  --color-surface-elevated: #ffffff;
-  --color-text: #161615;
-  --color-text-muted: #5e5b54;
-  --color-border: #d8d2c7;
-  --color-border-strong: #b8b0a2;
-  --color-focus: #1d4ed8;
+[data-year='1995'] {
+  --desktop-bg: #008080;
+  --title-bg: #000080;
+}
 
-  --era-accent: #1d4ed8;
+[data-year='2000'] {
+  --desktop-bg: #3a6ea5;
+  --font-os: Tahoma, Verdana, Arial, sans-serif;
+  --win-bg: #d4d0c8;
+  --bar-bg: #d4d0c8;
+  --taskbar-bg: #d4d0c8;
+  --start-bg: #d4d0c8;
+  --title-bg: linear-gradient(90deg, #0a246a, #a6caf0);
+  --accent: #0a246a;
+}
 
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
+[data-year='2005'] {
+  --desktop-bg: linear-gradient(180deg, #3b82f6 0%, #60a5fa 48%, #4ade80 50%, #16a34a 100%);
+  --font-os: Tahoma, 'Trebuchet MS', sans-serif;
+  --win-bg: #ece9d8;
+  --bar-bg: #ece9d8;
+  --win-radius: 8px 8px 0 0;
+  --win-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  --title-bg: linear-gradient(180deg, #2b75f6 0%, #0054e3 60%, #003ca8 100%);
+  --taskbar-bg: linear-gradient(180deg, #3a85f5 0%, #245edb 50%, #1941a5 100%);
+  --taskbar-fg: #ffffff;
+  --start-bg: linear-gradient(180deg, #5ec758 0%, #389f35 55%, #237421 100%);
+  --start-fg: #ffffff;
+  --start-radius: 0 10px 10px 0;
+  --accent: #0054e3;
+}
 
-  --radius-sm: 3px;
-  --radius-md: 4px;
-  --radius-lg: 6px;
+[data-year='2010'] {
+  --desktop-bg: radial-gradient(circle at 30% 25%, #38bdf8, #1d4ed8 55%, #0f172a 100%);
+  --font-os: 'Segoe UI', Tahoma, sans-serif;
+  --win-bg: rgba(235, 244, 255, 0.86);
+  --bar-bg: rgba(240, 246, 255, 0.8);
+  --win-border: rgba(255, 255, 255, 0.85);
+  --win-border-dark: rgba(30, 58, 138, 0.45);
+  --win-radius: 8px;
+  --win-shadow: 0 16px 40px rgba(0, 0, 0, 0.42);
+  --win-blur: blur(12px);
+  --title-bg: linear-gradient(180deg, rgba(191, 219, 254, 0.72), rgba(147, 197, 253, 0.5));
+  --title-fg: #0f172a;
+  --taskbar-bg: linear-gradient(180deg, rgba(30, 58, 138, 0.8), rgba(15, 23, 42, 0.9));
+  --taskbar-fg: #ffffff;
+  --start-bg: radial-gradient(circle at 35% 30%, #7dd3fc, #0284c7 65%, #0c4a6e 100%);
+  --start-fg: #ffffff;
+  --start-radius: 999px;
+  --accent: #0284c7;
+}
 
-  --container-max: 1260px;
+[data-year='2015'] {
+  --desktop-bg: linear-gradient(135deg, #003973, #0078d7);
+  --font-os: 'Segoe UI', Roboto, Arial, sans-serif;
+  --win-bg: #ffffff;
+  --bar-bg: #f3f3f3;
+  --win-border: #cccccc;
+  --win-border-dark: #cccccc;
+  --win-radius: 0px;
+  --win-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  --title-bg: #ffffff;
+  --title-fg: #111111;
+  --taskbar-bg: #111111;
+  --taskbar-fg: #ffffff;
+  --start-bg: #111111;
+  --start-fg: #ffffff;
+  --accent: #0078d7;
+  --bevel-light: #e5e5e5;
+  --bevel-dark: #cccccc;
+}
+
+[data-year='2020'] {
+  --desktop-bg: linear-gradient(135deg, #4338ca 0%, #db2777 52%, #f97316 100%);
+  --font-os: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+  --win-bg: rgba(30, 30, 36, 0.92);
+  --win-fg: #f3f4f6;
+  --bar-bg: rgba(40, 40, 48, 0.88);
+  --win-border: rgba(255, 255, 255, 0.16);
+  --win-border-dark: rgba(0, 0, 0, 0.45);
+  --win-radius: 14px;
+  --win-shadow: 0 24px 60px rgba(0, 0, 0, 0.48);
+  --win-blur: blur(16px);
+  --title-bg: rgba(42, 42, 50, 0.94);
+  --title-fg: #e5e7eb;
+  --traffic-display: flex;
+  --win-controls-display: none;
+  --input-bg: rgba(17, 17, 22, 0.85);
+  --input-fg: #f3f4f6;
+  --taskbar-bg: rgba(28, 28, 34, 0.78);
+  --taskbar-fg: #f3f4f6;
+  --taskbar-radius: 16px;
+  --taskbar-bottom: 10px;
+  --taskbar-width: min(94%, 820px);
+  --start-bg: rgba(255, 255, 255, 0.14);
+  --start-fg: #ffffff;
+  --start-radius: 10px;
+  --accent: #6366f1;
+}
+
+[data-year='2026'] {
+  --desktop-bg: #f5f2eb;
+  --desktop-fg: #1c1b18;
+  --font-os: 'Inter', system-ui, sans-serif;
+  --win-bg: #ffffff;
+  --win-fg: #1c1b18;
+  --bar-bg: #faf9f6;
+  --win-border: #e5e0d5;
+  --win-border-dark: #e5e0d5;
+  --win-radius: 20px;
+  --win-shadow: 0 20px 50px rgba(28, 27, 24, 0.1);
+  --title-bg: #faf9f6;
+  --title-fg: #1c1b18;
+  --traffic-display: flex;
+  --win-controls-display: none;
+  --input-bg: #f5f2eb;
+  --input-fg: #1c1b18;
+  --taskbar-bg: rgba(255, 255, 255, 0.92);
+  --taskbar-fg: #1c1b18;
+  --taskbar-radius: 999px;
+  --taskbar-bottom: 12px;
+  --taskbar-width: min(94%, 820px);
+  --start-bg: #1c1b18;
+  --start-fg: #ffffff;
+  --start-radius: 999px;
+  --accent: #1c1b18;
+}
+
+[data-year='future'] {
+  --desktop-bg: radial-gradient(circle at 20% 20%, rgba(217, 70, 239, 0.25), transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(6, 182, 212, 0.25), transparent 50%),
+    #05060b;
+  --desktop-fg: #e2e8f0;
+  --font-os: ui-monospace, 'Cascadia Code', monospace;
+  --win-bg: rgba(10, 14, 26, 0.85);
+  --win-fg: #e2e8f0;
+  --bar-bg: rgba(15, 22, 40, 0.88);
+  --win-border: rgba(34, 211, 238, 0.55);
+  --win-border-dark: rgba(232, 121, 249, 0.55);
+  --win-radius: 16px;
+  --win-shadow: 0 0 32px rgba(34, 211, 238, 0.22), 0 0 64px rgba(217, 70, 239, 0.16);
+  --win-blur: blur(16px);
+  --title-bg: rgba(15, 23, 42, 0.92);
+  --title-fg: #67e8f9;
+  --traffic-display: flex;
+  --win-controls-display: none;
+  --input-bg: rgba(5, 8, 18, 0.85);
+  --input-fg: #67e8f9;
+  --taskbar-bg: rgba(12, 16, 30, 0.82);
+  --taskbar-fg: #e2e8f0;
+  --taskbar-radius: 999px;
+  --taskbar-bottom: 12px;
+  --taskbar-width: min(94%, 840px);
+  --start-bg: linear-gradient(90deg, #06b6d4, #d946ef);
+  --start-fg: #05060b;
+  --start-radius: 999px;
+  --accent: #22d3ee;
 }

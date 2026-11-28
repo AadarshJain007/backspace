@@ -1,0 +1,126 @@
+.os-taskbar {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: var(--taskbar-bottom);
+  width: var(--taskbar-width);
+  height: 44px;
+  padding: 4px 8px;
+  background: var(--taskbar-bg);
+  color: var(--taskbar-fg);
+  border-radius: var(--taskbar-radius);
+  border-top: 2px solid var(--win-border);
+  backdrop-filter: var(--win-blur);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 30;
+}
+
+.os-start-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: var(--start-bg);
+  color: var(--start-fg);
+  border-radius: var(--start-radius);
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.os-year-strip {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.os-year-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.os-year-btn {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.os-year-btn.is-active {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+[data-year='2015'] .os-year-btn.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  border-bottom: 2px solid #0078d7;
+  border-radius: 0;
+}
+
+.os-tray {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(128, 128, 128, 0.45);
+}
+
+.os-start-menu {
+  position: fixed;
+  left: 12px;
+  bottom: 54px;
+  width: 245px;
+  background: var(--win-bg);
+  color: var(--win-fg);
+  border-radius: var(--win-radius);
+  border: 2px solid;
+  border-color: var(--win-border) var(--win-border-dark) var(--win-border-dark) var(--win-border);
+  box-shadow: var(--win-shadow);
+  backdrop-filter: var(--win-blur);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.os-start-banner {
+  padding: 8px 10px;
+  background: var(--title-bg);
+  color: var(--title-fg);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.os-start-years {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  gap: 3px;
+}
+
+.os-start-item {
+  padding: 6px 10px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.os-start-item:hover,
+.os-start-item.is-active {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+.os-start-sep {
+  height: 1px;
+  background: var(--bevel-dark);
+  margin: 2px 0;
+}

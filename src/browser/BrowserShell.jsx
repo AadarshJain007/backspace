@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import './BrowserShell.css';
 
 function BrowserShell({
@@ -12,127 +13,192 @@ function BrowserShell({
   isExpanded,
   onToggleExpand,
   isMinimized,
-  onToggleMinimize,
+  onClose,
+  onOpenAbout,
   children,
 }) {
   const config = era.browserConfig || {};
-  const chromeStyle = era.chromeStyle || 'modern-dark';
   const activeUrl = displayUrl || era.url;
+  const winRef = useRef(null);
+  const [pos, setPos] = useState(null);
+  const dragState = useRef({ active: false, offsetX: 0, offsetY: 0 });
+
+  useEffect(() => {
+    const handleMove = (e) => {
+      if (!dragState.current.active) return;
+      setPos({
+        x: Math.max(0, e.clientX - dragState.current.offsetX),
+        y: Math.max(0, e.clientY - dragState.current.offsetY),
+      });
+    };
+    const handleUp = () => {
+      dragState.current.active = false;
+    };
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('mouseup', handleUp);
+    return () => {
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('mouseup', handleUp);
+    };
+  }, []);
+
+  const startDrag = (e) => {
+    if (isExpanded || e.target.closest('button') || !winRef.current) return;
+    const rect = winRef.current.getBoundingClientRect();
+    dragState.current = {
+      active: true,
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top,
+    };
+  };
+
+  if (isMinimized) {
+    return null;
+  }
+
+  const inlinePos =
+    pos && !isExpanded ? { left: `${pos.x}px`, top: `${pos.y}px` } : undefined;
 
   return (
     <section
-      className={`bs-shell bs-shell--${chromeStyle} ${
-        isMinimized ? 'is-minimized' : ''
-      } ${isExpanded ? 'is-expanded' : ''}`}
+      ref={winRef}
+      style={inlinePos}
+      className={`os-window ${isExpanded ? 'is-maximized' : ''}`}
       aria-label={`Browser window: ${config.windowTitle || era.browser}`}
     >
-      
-      <div className="bs-shell-topbar">
-        <div className="bs-shell-title-group">
-          <span className="bs-shell-era-badge">{era.year}</span>
-          <span className="bs-shell-title">
+      <header className="os-titlebar" onMouseDown={startDrag}>
+        <div className="os-titlebar-left">
+          <div className="os-traffic-lights" aria-hidden="true">
+            <button
+              type="button"
+              className="os-tl os-tl-close"
+              onClick={onClose}
+              title="Close"
+            />
+            <button
+              type="button"
+              className="os-tl os-tl-min"
+              onClick={onClose}
+              title="Minimize"
+            />
+            <button
+              type="button"
+              className="os-tl os-tl-max"
+              onClick={onToggleExpand}
+              title="Maximize"
+            />
+          </div>
+          <span aria-hidden="true">🌐</span>
+          <span className="os-titlebar-text">
             {config.windowTitle || era.browser}
           </span>
         </div>
 
-        <div className="bs-shell-win-controls">
+        <div className="os-win-controls">
           <button
             type="button"
-            className="bs-win-btn"
-            onClick={onToggleMinimize}
-            aria-label={isMinimized ? 'Restore browser window' : 'Minimize browser window'}
-            title={isMinimized ? 'Restore' : 'Minimize'}
+            className="os-win-btn"
+            onClick={onClose}
+            aria-label="Minimize window"
           >
-            {isMinimized ? '□' : '—'}
+            _
           </button>
           <button
             type="button"
-            className="bs-win-btn"
+            className="os-win-btn"
             onClick={onToggleExpand}
-            aria-label={isExpanded ? 'Exit expanded view' : 'Expand browser view'}
-            title={isExpanded ? 'Restore size' : 'Expand'}
+            aria-label="Maximize window"
           >
-            {isExpanded ? '❐' : '▢'}
+            □
+          </button>
+          <button
+            type="button"
+            className="os-win-btn os-win-btn-close"
+            onClick={onClose}
+            aria-label="Close window"
+          >
+            ×
           </button>
         </div>
+      </header>
+
+      <div className="os-menubar" role="menubar">
+        <button type="button" className="os-menu-item" onClick={onRefresh}>
+          File
+        </button>
+        <button type="button" className="os-menu-item" onClick={onToggleExpand}>
+          View
+        </button>
+        <button type="button" className="os-menu-item" onClick={onRefresh}>
+          Reload
+        </button>
+        <button type="button" className="os-menu-item" onClick={onOpenAbout}>
+          Help
+        </button>
       </div>
 
-      {!isMinimized && (
-        <>
-          
-          <div className="bs-shell-toolbar">
-            <div className="bs-shell-nav-buttons">
-              <button
-                type="button"
-                className="bs-nav-btn"
-                onClick={onBack}
-                disabled={!canGoBack}
-                aria-label="Back in browser history"
-                title="Back"
-              >
-                {config.backLabel || '←'}
-              </button>
-              <button
-                type="button"
-                className="bs-nav-btn"
-                onClick={onForward}
-                disabled={!canGoForward}
-                aria-label="Forward in browser history"
-                title="Forward"
-              >
-                {config.forwardLabel || '→'}
-              </button>
-              <button
-                type="button"
-                className={`bs-nav-btn ${isLoading ? 'is-spinning' : ''}`}
-                onClick={onRefresh}
-                aria-label="Refresh era view"
-                title="Refresh"
-              >
-                {config.refreshLabel || '↻'}
-              </button>
-            </div>
+      <div className="os-addressbar">
+        <div className="os-nav-group">
+          <button
+            type="button"
+            className="os-nav-btn"
+            onClick={onBack}
+            disabled={!canGoBack}
+            title="Back"
+          >
+            {config.backLabel || '←'}
+          </button>
+          <button
+            type="button"
+            className="os-nav-btn"
+            onClick={onForward}
+            disabled={!canGoForward}
+            title="Forward"
+          >
+            {config.forwardLabel || '→'}
+          </button>
+          <button
+            type="button"
+            className="os-nav-btn"
+            onClick={onRefresh}
+            title="Refresh"
+          >
+            {config.refreshLabel || '↻'}
+          </button>
+        </div>
 
-            <div className="bs-shell-address" aria-label="Address bar">
-              {config.addressLabel && (
-                <span className="bs-address-label">{config.addressLabel}</span>
-              )}
-              <span className="bs-protocol-tag">{era.protocol}</span>
-              <span className="bs-url-text">{activeUrl}</span>
-            </div>
+        <div className="os-address-box">
+          <span className="os-protocol-tag">{era.protocol}</span>
+          <span className="os-url-text">{activeUrl}</span>
+        </div>
 
-            <div className="bs-shell-res">{era.resolution}</div>
-          </div>
+        <button type="button" className="os-go-btn" onClick={onRefresh}>
+          Go
+        </button>
+      </div>
 
-          
-          <div
-            className={`bs-shell-progress ${isLoading ? 'is-active' : ''}`}
-            aria-hidden="true"
-          />
-
-          
-          <div className="bs-shell-content">
-            {isLoading && (
-              <div className="bs-warp-overlay" role="status" aria-live="polite">
-                <span className="bs-warp-year">{era.year}</span>
-                <span className="bs-warp-msg">
-                  {era.loadingMessage || `Loading ${activeUrl}...`}
-                </span>
+      <div className="os-viewport">
+        {isLoading && (
+          <div className="os-connecting" role="status" aria-live="polite">
+            <div className="os-connecting-box">
+              <div>{era.loadingMessage || 'Connecting...'}</div>
+              <div className="os-progress-track">
+                <div className="os-progress-fill" />
               </div>
-            )}
-            {children}
+            </div>
           </div>
+        )}
+        <div className="os-viewport-inner">{children}</div>
+      </div>
 
-          <div className="bs-shell-statusbar">
-            <span>
-              {isLoading
-                ? era.loadingMessage || `Loading ${activeUrl}...`
-                : era.preview.status}
-            </span>
-            <span>{era.bandwidth}</span>
-          </div>
-        </>
-      )}
+      <footer className="os-statusbar">
+        <span>
+          {isLoading
+            ? era.loadingMessage || `Loading ${activeUrl}...`
+            : era.tagline}
+        </span>
+        <span>{era.bandwidth}</span>
+      </footer>
     </section>
   );
 }

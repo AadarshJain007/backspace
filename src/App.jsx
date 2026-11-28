@@ -1,13 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ERAS } from './data/eras.js';
 import { playEraTransitionSound } from './utils/soundEffects.js';
-import Header from './components/Header.jsx';
-import IntroExperience from './components/IntroExperience.jsx';
-import YearSelector from './components/YearSelector.jsx';
-import Timeline from './components/Timeline.jsx';
-import EraIndicator from './components/EraIndicator.jsx';
 import BrowserShell from './browser/BrowserShell.jsx';
 import BrowserViewport from './browser/BrowserViewport.jsx';
+import Taskbar from './components/Taskbar.jsx';
 
 function getInitialEraIndex() {
   if (typeof window === 'undefined') return 0;
@@ -19,20 +15,17 @@ function getInitialEraIndex() {
 function App() {
   const [history, setHistory] = useState(() => [getInitialEraIndex()]);
   const [historyPointer, setHistoryPointer] = useState(0);
-  const [showIntro, setShowIntro] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [refreshTick, setRefreshTick] = useState(0);
   const [customUrl, setCustomUrl] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
   const [showSecretNote, setShowSecretNote] = useState(false);
 
   const currentIndex = history[historyPointer];
   const currentEra = ERAS[currentIndex];
-  const hasPrev = currentIndex > 0;
-  const hasNext = currentIndex < ERAS.length - 1;
-
   const canGoBack = historyPointer > 0;
   const canGoForward = historyPointer < history.length - 1;
 
@@ -46,7 +39,10 @@ function App() {
 
   const navigateToEra = useCallback(
     (nextIndex) => {
-      if (nextIndex === currentIndex) return;
+      if (nextIndex === currentIndex) {
+        setIsMinimized(false);
+        return;
+      }
       setHistory((prev) => {
         const sliced = prev.slice(0, historyPointer + 1);
         return [...sliced, nextIndex];
@@ -59,15 +55,11 @@ function App() {
   );
 
   const goPrev = useCallback(() => {
-    if (currentIndex > 0) {
-      navigateToEra(currentIndex - 1);
-    }
+    if (currentIndex > 0) navigateToEra(currentIndex - 1);
   }, [currentIndex, navigateToEra]);
 
   const goNext = useCallback(() => {
-    if (currentIndex < ERAS.length - 1) {
-      navigateToEra(currentIndex + 1);
-    }
+    if (currentIndex < ERAS.length - 1) navigateToEra(currentIndex + 1);
   }, [currentIndex, navigateToEra]);
 
   const goRandom = useCallback(() => {
@@ -108,11 +100,11 @@ function App() {
   }, [isTransitioning]);
 
   useEffect(() => {
-    document.documentElement.style.setProperty('--era-accent', currentEra.accent);
+    document.documentElement.setAttribute('data-year', currentEra.id);
     if (window.location.hash !== `#${currentEra.id}`) {
       window.history.replaceState(null, '', `#${currentEra.id}`);
     }
-  }, [currentEra.accent, currentEra.id]);
+  }, [currentEra.id]);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -127,12 +119,11 @@ function App() {
   }, [currentIndex, navigateToEra]);
 
   useEffect(() => {
-    if (showIntro) return;
-
     const handleKeyDown = (event) => {
-      if (showSecretNote) {
+      if (showAbout || showSecretNote) {
         if (event.key === 'Escape') {
           event.preventDefault();
+          setShowAbout(false);
           setShowSecretNote(false);
         }
         return;
@@ -163,25 +154,118 @@ function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showIntro, showSecretNote, goPrev, goNext, goRandom]);
+  }, [showAbout, showSecretNote, goPrev, goNext, goRandom]);
 
   return (
-    <div className="app-layout">
-      {showIntro && <IntroExperience onDismiss={() => setShowIntro(false)} />}
+    <main className="os-desktop">
+      <div className="os-icons" aria-label="Desktop icons">
+        <button
+          type="button"
+          className="os-icon"
+          onClick={() => setIsMinimized(false)}
+        >
+          <span className="os-icon-glyph" aria-hidden="true">
+            🌐
+          </span>
+          <span className="os-icon-label">Browser</span>
+        </button>
+
+        <button
+          type="button"
+          className="os-icon"
+          onClick={() => setShowAbout(true)}
+        >
+          <span className="os-icon-glyph" aria-hidden="true">
+            📄
+          </span>
+          <span className="os-icon-label">ReadMe.txt</span>
+        </button>
+
+        <button
+          type="button"
+          className="os-icon"
+          onClick={() => setSoundEnabled((prev) => !prev)}
+        >
+          <span className="os-icon-glyph" aria-hidden="true">
+            {soundEnabled ? '🔊' : '🔇'}
+          </span>
+          <span className="os-icon-label">
+            {soundEnabled ? 'Sound: ON' : 'Sound: OFF'}
+          </span>
+        </button>
+      </div>
+
+      <BrowserShell
+        era={currentEra}
+        displayUrl={customUrl}
+        canGoBack={canGoBack}
+        canGoForward={canGoForward}
+        onBack={handleBrowserBack}
+        onForward={handleBrowserForward}
+        onRefresh={handleRefresh}
+        isLoading={isTransitioning}
+        isExpanded={isExpanded}
+        onToggleExpand={() => setIsExpanded((prev) => !prev)}
+        isMinimized={isMinimized}
+        onClose={() => setIsMinimized(true)}
+        onOpenAbout={() => setShowAbout(true)}
+      >
+        <BrowserViewport
+          era={currentEra}
+          isLoading={isTransitioning}
+          refreshTick={refreshTick}
+          onUrlChange={setCustomUrl}
+          onSelectEraIndex={navigateToEra}
+        />
+      </BrowserShell>
+
+      <Taskbar
+        eras={ERAS}
+        currentIndex={currentIndex}
+        soundEnabled={soundEnabled}
+        onSelectEra={navigateToEra}
+        onRandomEra={goRandom}
+        onToggleSound={() => setSoundEnabled((prev) => !prev)}
+        onOpenBrowser={() => setIsMinimized(false)}
+        onOpenAbout={() => setShowAbout(true)}
+      />
+
+      {showAbout && (
+        <div className="os-modal-backdrop" role="dialog" aria-modal="true">
+          <div className="os-modal-card">
+            <h2>BACKSPACE OS</h2>
+            <p>
+              An interactive internet time machine. Switch years in the taskbar
+              to transform both the desktop OS and the web inside the browser.
+            </p>
+            <ul>
+              <li>Drag the browser title bar to move the window.</li>
+              <li>Use ← / → to step eras, R for random, M for sound.</li>
+              <li>Press Shift + B for hidden curator notes.</li>
+            </ul>
+            <button
+              type="button"
+              className="os-modal-btn"
+              onClick={() => setShowAbout(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
 
       {showSecretNote && (
-        <div className="bs-intro-backdrop" role="dialog" aria-modal="true">
-          <div className="bs-intro-panel">
-            <div className="bs-intro-eyebrow">CURATOR&apos;S MARGIN NOTE</div>
-            <h2 className="bs-intro-title">Hidden Details</h2>
-            <ul className="bs-intro-instructions">
+        <div className="os-modal-backdrop" role="dialog" aria-modal="true">
+          <div className="os-modal-card">
+            <h2>Curator&apos;s Margin Note</h2>
+            <ul>
               <li>1995: Click the &quot;Last updated&quot; date or the tiny π in the footer.</li>
               <li>2005: Click Tom in the Top 8 friends grid.</li>
               <li>Future: Tap the Temporal Echo node.</li>
             </ul>
             <button
               type="button"
-              className="bs-intro-cta"
+              className="os-modal-btn"
               onClick={() => setShowSecretNote(false)}
             >
               Close Note
@@ -189,67 +273,7 @@ function App() {
           </div>
         </div>
       )}
-
-      <Header
-        currentIndex={currentIndex}
-        totalCount={ERAS.length}
-        soundEnabled={soundEnabled}
-        onToggleSound={() => setSoundEnabled((prev) => !prev)}
-        onOpenIntro={() => setShowIntro(true)}
-      />
-
-      <main className="app-main">
-        <YearSelector
-          era={currentEra}
-          hasPrev={hasPrev}
-          hasNext={hasNext}
-          onPrev={goPrev}
-          onNext={goNext}
-          onRandom={goRandom}
-        />
-
-        <Timeline
-          eras={ERAS}
-          currentIndex={currentIndex}
-          onSelectEra={navigateToEra}
-        />
-
-        <div
-          className={`machine-workspace ${isExpanded ? 'is-expanded' : ''}`}
-        >
-          {!isExpanded && (
-            <EraIndicator
-              era={currentEra}
-              currentIndex={currentIndex}
-              totalCount={ERAS.length}
-            />
-          )}
-
-          <BrowserShell
-            era={currentEra}
-            displayUrl={customUrl}
-            canGoBack={canGoBack}
-            canGoForward={canGoForward}
-            onBack={handleBrowserBack}
-            onForward={handleBrowserForward}
-            onRefresh={handleRefresh}
-            isLoading={isTransitioning}
-            isExpanded={isExpanded}
-            onToggleExpand={() => setIsExpanded((prev) => !prev)}
-            isMinimized={isMinimized}
-            onToggleMinimize={() => setIsMinimized((prev) => !prev)}
-          >
-            <BrowserViewport
-              era={currentEra}
-              isLoading={isTransitioning}
-              refreshTick={refreshTick}
-              onUrlChange={setCustomUrl}
-              onSelectEraIndex={navigateToEra}
-            />
-          </BrowserShell>
-        </div>
-      </main>
-    </div>
+    </main>
   );
 }
 
