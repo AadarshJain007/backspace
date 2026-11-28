@@ -111,11 +111,24 @@ function BrowserShell({
           />
 
           
-          <div className="bs-shell-content">{children}</div>
+          <div className="bs-shell-content">
+            {isLoading && (
+              <div className="bs-warp-overlay" role="status" aria-live="polite">
+                <span className="bs-warp-year">{era.year}</span>
+                <span className="bs-warp-msg">
+                  {era.loadingMessage || `Loading ${activeUrl}...`}
+                </span>
+              </div>
+            )}
+            {children}
+          </div>
 
-          
           <div className="bs-shell-statusbar">
-            <span>{isLoading ? `Loading ${era.url}...` : era.preview.status}</span>
+            <span>
+              {isLoading
+                ? era.loadingMessage || `Loading ${activeUrl}...`
+                : era.preview.status}
+            </span>
             <span>{era.bandwidth}</span>
           </div>
         </>

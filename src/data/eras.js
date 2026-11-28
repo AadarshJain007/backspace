@@ -9,6 +9,7 @@ export const ERAS = [
     resolution: '640 × 480',
     bandwidth: '28.8 kbps',
     url: 'http://home.netscape.com/welcome.html',
+    loadingMessage: 'Dialing 28.8k modem handshake...',
     accent: '#38bdf8',
     chromeStyle: 'classic',
     browserConfig: {
@@ -39,6 +40,7 @@ export const ERAS = [
     resolution: '800 × 600',
     bandwidth: '56k / Early DSL',
     url: 'http://www.geocities.com/siliconvalley/park/2000/',
+    loadingMessage: 'Loading GeoCities frameset...',
     accent: '#facc15',
     chromeStyle: 'beveled',
     browserConfig: {
@@ -69,6 +71,7 @@ export const ERAS = [
     resolution: '1024 × 768',
     bandwidth: '1.5 Mbps DSL',
     url: 'http://del.icio.us/popular/web2.0',
+    loadingMessage: 'Hydrating AJAX fragments...',
     accent: '#fb923c',
     chromeStyle: 'glossy',
     browserConfig: {
@@ -99,6 +102,7 @@ export const ERAS = [
     resolution: '960px Grid / 320px Mobile',
     bandwidth: '3G / Wi-Fi',
     url: 'https://instagr.am/explore/',
+    loadingMessage: 'Establishing Aero glass session...',
     accent: '#34d399',
     chromeStyle: 'skeuomorphic',
     browserConfig: {
@@ -129,6 +133,7 @@ export const ERAS = [
     resolution: '1280 × 800',
     bandwidth: '4G LTE',
     url: 'https://medium.com/tag/design',
+    loadingMessage: 'Booting Material SPA bundle...',
     accent: '#60a5fa',
     chromeStyle: 'flat',
     browserConfig: {
@@ -159,6 +164,7 @@ export const ERAS = [
     resolution: '1440 × 900',
     bandwidth: 'Fiber / 5G',
     url: 'https://linear.app/roadmap',
+    loadingMessage: 'Negotiating QUIC + dark mode...',
     accent: '#a78bfa',
     chromeStyle: 'modern-dark',
     browserConfig: {
@@ -189,6 +195,7 @@ export const ERAS = [
     resolution: 'Fluid Container Queries',
     bandwidth: 'Multi-Gigabit',
     url: 'https://backspace.archive/2026',
+    loadingMessage: 'Syncing edge canvas...',
     accent: '#2dd4bf',
     chromeStyle: 'ambient',
     browserConfig: {
@@ -219,6 +226,7 @@ export const ERAS = [
     resolution: 'Unbounded Canvas',
     bandwidth: 'Instantaneous',
     url: 'archive://future.web/horizon',
+    loadingMessage: 'Synchronizing neural mesh...',
     accent: '#f472b6',
     chromeStyle: 'future',
     browserConfig: {

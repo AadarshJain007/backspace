@@ -191,9 +191,56 @@
 }
 
 .bs-shell-content {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.bs-warp-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  background: rgba(244, 241, 234, 0.92);
+  color: #161615;
+  text-align: center;
+  padding: var(--space-lg);
+  animation: bs-warp-fade 220ms ease-out;
+}
+
+.bs-warp-year {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.bs-warp-msg {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #5e5b54;
+}
+
+@keyframes bs-warp-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-shell,
+  .bs-warp-overlay,
+  .bs-shell-progress.is-active::after {
+    transition: none;
+    animation: none;
+  }
 }
 
 .bs-shell-statusbar {

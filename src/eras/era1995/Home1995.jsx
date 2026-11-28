@@ -1,4 +1,7 @@
+import { useState } from 'react';
+
 function Home1995({ visitorCount, onNavigate, onOpenSite, onRandomSite }) {
+  const [showSource, setShowSource] = useState(false);
   const formattedCount = String(visitorCount).padStart(6, '0');
 
   return (
@@ -25,8 +28,19 @@ function Home1995({ visitorCount, onNavigate, onOpenSite, onRandomSite }) {
             <td className="w95-banner-text">
               <div className="w95-blink-row">
                 <span className="w95-new-badge">NEW!</span>
-                <span className="w95-updated">Last updated: Nov 14, 1995</span>
+                <button
+                  type="button"
+                  className="w95-updated w95-secret-date"
+                  onClick={() => setShowSource((prev) => !prev)}
+                >
+                  Last updated: Nov 14, 1995
+                </button>
               </div>
+              {showSource && (
+                <pre className="w95-ascii-pre">
+                  {`<HTML>\n<HEAD><TITLE>Alex's Cyberspace Corner</TITLE></HEAD>\n<BODY BGCOLOR="#FFFFCC" TEXT="#000000">\n  <!-- Hand-coded in Notepad 3.11 -->\n</BODY>\n</HTML>`}
+                </pre>
+              )}
               <h1 className="w95-h1">
                 Welcome to Alex&apos;s Cyberspace Corner!!
               </h1>

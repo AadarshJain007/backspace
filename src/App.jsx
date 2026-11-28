@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ERAS } from './data/eras.js';
+import { playEraTransitionSound } from './utils/soundEffects.js';
 import Header from './components/Header.jsx';
 import IntroExperience from './components/IntroExperience.jsx';
 import YearSelector from './components/YearSelector.jsx';
@@ -12,11 +13,13 @@ function App() {
   const [history, setHistory] = useState([0]);
   const [historyPointer, setHistoryPointer] = useState(0);
   const [showIntro, setShowIntro] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [refreshTick, setRefreshTick] = useState(0);
   const [customUrl, setCustomUrl] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [showSecretNote, setShowSecretNote] = useState(false);
 
   const currentIndex = history[historyPointer];
   const currentEra = ERAS[currentIndex];
@@ -25,6 +28,14 @@ function App() {
 
   const canGoBack = historyPointer > 0;
   const canGoForward = historyPointer < history.length - 1;
+
+  const triggerTransition = useCallback(
+    (eraId) => {
+      setIsTransitioning(true);
+      playEraTransitionSound(eraId, soundEnabled);
+    },
+    [soundEnabled]
+  );
 
   const navigateToEra = useCallback(
     (nextIndex) => {
@@ -35,8 +46,9 @@ function App() {
       });
       setHistoryPointer((prev) => prev + 1);
       setIsMinimized(false);
+      triggerTransition(ERAS[nextIndex].id);
     },
-    [currentIndex, historyPointer]
+    [currentIndex, historyPointer, triggerTransition]
   );
 
   const goPrev = useCallback(() => {
@@ -51,32 +63,42 @@ function App() {
     }
   }, [currentIndex, navigateToEra]);
 
+  const goRandom = useCallback(() => {
+    const indices = ERAS.map((_, idx) => idx).filter((idx) => idx !== currentIndex);
+    const pick = indices[Math.floor(Math.random() * indices.length)];
+    navigateToEra(pick);
+  }, [currentIndex, navigateToEra]);
+
   const handleBrowserBack = useCallback(() => {
     if (canGoBack) {
+      const targetIndex = history[historyPointer - 1];
       setHistoryPointer((prev) => prev - 1);
+      triggerTransition(ERAS[targetIndex].id);
     }
-  }, [canGoBack]);
+  }, [canGoBack, history, historyPointer, triggerTransition]);
 
   const handleBrowserForward = useCallback(() => {
     if (canGoForward) {
+      const targetIndex = history[historyPointer + 1];
       setHistoryPointer((prev) => prev + 1);
+      triggerTransition(ERAS[targetIndex].id);
     }
-  }, [canGoForward]);
+  }, [canGoForward, history, historyPointer, triggerTransition]);
 
   const handleRefresh = useCallback(() => {
-    setIsRefreshing(true);
     setRefreshTick((prev) => prev + 1);
-  }, []);
+    triggerTransition(currentEra.id);
+  }, [currentEra.id, triggerTransition]);
 
   useEffect(() => {
     setCustomUrl(null);
   }, [currentEra.id]);
 
   useEffect(() => {
-    if (!isRefreshing) return;
-    const timer = setTimeout(() => setIsRefreshing(false), 450);
+    if (!isTransitioning) return;
+    const timer = setTimeout(() => setIsTransitioning(false), 450);
     return () => clearTimeout(timer);
-  }, [isRefreshing]);
+  }, [isTransitioning]);
 
   useEffect(() => {
     document.documentElement.style.setProperty('--era-accent', currentEra.accent);
@@ -97,20 +119,52 @@ function App() {
       } else if (event.key === 'ArrowRight') {
         event.preventDefault();
         goNext();
+      } else if (event.key.toLowerCase() === 'r') {
+        event.preventDefault();
+        goRandom();
+      } else if (event.key.toLowerCase() === 'm') {
+        event.preventDefault();
+        setSoundEnabled((prev) => !prev);
+      } else if (event.shiftKey && event.key.toLowerCase() === 'b') {
+        event.preventDefault();
+        setShowSecretNote((prev) => !prev);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showIntro, goPrev, goNext]);
+  }, [showIntro, goPrev, goNext, goRandom]);
 
   return (
     <div className="app-layout">
       {showIntro && <IntroExperience onDismiss={() => setShowIntro(false)} />}
 
+      {showSecretNote && (
+        <div className="bs-intro-backdrop" role="dialog" aria-modal="true">
+          <div className="bs-intro-panel">
+            <div className="bs-intro-eyebrow">CURATOR&apos;S MARGIN NOTE</div>
+            <h2 className="bs-intro-title">Hidden Details</h2>
+            <ul className="bs-intro-instructions">
+              <li>1995: Click the &quot;Last updated&quot; date or the tiny π in the footer.</li>
+              <li>2005: Click Tom in the Top 8 friends grid.</li>
+              <li>Future: Tap the Temporal Echo node.</li>
+            </ul>
+            <button
+              type="button"
+              className="bs-intro-cta"
+              onClick={() => setShowSecretNote(false)}
+            >
+              Close Note
+            </button>
+          </div>
+        </div>
+      )}
+
       <Header
         currentIndex={currentIndex}
         totalCount={ERAS.length}
+        soundEnabled={soundEnabled}
+        onToggleSound={() => setSoundEnabled((prev) => !prev)}
         onOpenIntro={() => setShowIntro(true)}
       />
 
@@ -121,6 +175,7 @@ function App() {
           hasNext={hasNext}
           onPrev={goPrev}
           onNext={goNext}
+          onRandom={goRandom}
         />
 
         <Timeline
@@ -148,7 +203,7 @@ function App() {
             onBack={handleBrowserBack}
             onForward={handleBrowserForward}
             onRefresh={handleRefresh}
-            isLoading={isRefreshing}
+            isLoading={isTransitioning}
             isExpanded={isExpanded}
             onToggleExpand={() => setIsExpanded((prev) => !prev)}
             isMinimized={isMinimized}
@@ -156,9 +211,10 @@ function App() {
           >
             <BrowserViewport
               era={currentEra}
-              isLoading={isRefreshing}
+              isLoading={isTransitioning}
               refreshTick={refreshTick}
               onUrlChange={setCustomUrl}
+              onSelectEraIndex={navigateToEra}
             />
           </BrowserShell>
         </div>

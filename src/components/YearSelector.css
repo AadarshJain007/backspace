@@ -56,6 +56,20 @@
   color: var(--color-text-muted);
 }
 
+.bs-random-btn {
+  padding: 0.22rem 0.55rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.bs-random-btn:hover {
+  border-color: var(--color-text);
+}
+
 @media (min-width: 640px) {
   .bs-step-label {
     display: inline;

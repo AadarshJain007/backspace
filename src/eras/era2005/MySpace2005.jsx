@@ -38,6 +38,7 @@ function MySpace2005() {
 
   const [friends, setFriends] = useState(INITIAL_FRIENDS);
   const [newFriend, setNewFriend] = useState('');
+  const [tomNoteOpen, setTomNoteOpen] = useState(false);
 
   const handleSaveProfile = (event) => {
     event.preventDefault();
@@ -155,16 +156,32 @@ function MySpace2005() {
           <div className="mc-friends-grid">
             {friends.map((f) => (
               <div key={f.id} className="mc-friend-tile">
-                <div
-                  className="mc-friend-pic"
-                  style={{ background: f.color }}
-                >
-                  {f.name.slice(0, 1).toUpperCase()}
-                </div>
+                {f.name === 'Tom' ? (
+                  <button
+                    type="button"
+                    className="mc-friend-pic"
+                    style={{ background: f.color }}
+                    onClick={() => setTomNoteOpen((prev) => !prev)}
+                  >
+                    T
+                  </button>
+                ) : (
+                  <div
+                    className="mc-friend-pic"
+                    style={{ background: f.color }}
+                  >
+                    {f.name.slice(0, 1).toUpperCase()}
+                  </div>
+                )}
                 <span className="mc-friend-name">{f.name}</span>
               </div>
             ))}
           </div>
+          {tomNoteOpen && (
+            <div className="mc-tom-note">
+              &quot;Thanks for being my first friend on the internet.&quot; — Tom
+            </div>
+          )}
           <form className="mc-friend-form" onSubmit={handleAddFriend}>
             <input
               type="text"

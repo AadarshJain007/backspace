@@ -394,6 +394,21 @@
   text-align: center;
 }
 
+.w95-secret-date {
+  text-decoration: underline dotted;
+}
+
+.w95-pi-link {
+  font-family: 'Times New Roman', serif;
+  font-size: 11px;
+  color: #888888;
+  margin-left: 4px;
+}
+
+.w95-pi-link:hover {
+  color: #000080;
+}
+
 @media (max-width: 640px) {
   .w95-layout-table tbody,
   .w95-layout-table tr,

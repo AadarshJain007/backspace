@@ -11,6 +11,7 @@ const PAGE_URLS = {
   directory: 'http://www.cyberspace.org/~alex/directory.html',
   gallery: 'http://www.cyberspace.org/~alex/gallery.html',
   construction: 'http://www.cyberspace.org/~alex/jukebox.html',
+  bbs: 'http://www.cyberspace.org/~alex/bbs-node7.html',
 };
 
 const WEBRING_STOPS = [
@@ -262,12 +263,43 @@ function Era1995({ isLoading, refreshTick, onUrlChange }) {
         </tbody>
       </table>
 
+      {activePage === 'bbs' && (
+        <div className="w95-section">
+          <div className="w95-crumb">
+            <button
+              type="button"
+              className="w95-link-btn"
+              onClick={() => handleNavigate('home')}
+            >
+              ← Return to Web
+            </button>
+          </div>
+          <pre className="w95-ascii-pre">
+{`================================================
+  NODE #7 · NIGHTFALL DIAL-UP BBS (EST. 1993)
+================================================
+  SYSOP: Alex
+  BAUD : 14400 / 28800
+  MSG  : "Before the browser, there was ANSI."
+================================================`}
+          </pre>
+        </div>
+      )}
+
       <div className="w95-retro-status" role="status">
         <span>NETSCAPE STATUS:</span> {statusMessage}
       </div>
 
       <footer className="w95-footer">
-        Copyright © 1995 Alex&apos;s Cyberspace Corner · Hand-coded in Notepad
+        Copyright © 1995 Alex&apos;s Cyberspace Corner · Hand-coded in Notepad{' '}
+        <button
+          type="button"
+          className="w95-pi-link"
+          onClick={() => handleNavigate('bbs')}
+          aria-label="Node 7"
+        >
+          π
+        </button>
       </footer>
     </div>
   );

@@ -5,9 +5,16 @@ import Era2010 from '../eras/era2010/Era2010.jsx';
 import Era2015 from '../eras/era2015/Era2015.jsx';
 import Era2020 from '../eras/era2020/Era2020.jsx';
 import Era2026 from '../eras/era2026/Era2026.jsx';
+import EraFuture from '../eras/eraFuture/EraFuture.jsx';
 import './BrowserViewport.css';
 
-function BrowserViewport({ era, isLoading, refreshTick, onUrlChange }) {
+function BrowserViewport({
+  era,
+  isLoading,
+  refreshTick,
+  onUrlChange,
+  onSelectEraIndex,
+}) {
   if (era.id === '1995') {
     return (
       <Era1995
@@ -42,29 +49,16 @@ function BrowserViewport({ era, isLoading, refreshTick, onUrlChange }) {
     return <Era2026 isLoading={isLoading} onUrlChange={onUrlChange} />;
   }
 
-  return (
-    <div className={`bs-stage bs-stage--${era.chromeStyle}`}>
-      <div className="bs-stage-label">
-        <span>ERA CONTENT VIEWPORT</span>
-        <span>{era.browser}</span>
-      </div>
+  if (era.id === 'future') {
+    return (
+      <EraFuture
+        isLoading={isLoading}
+        onJumpTo1995={() => onSelectEraIndex && onSelectEraIndex(0)}
+      />
+    );
+  }
 
-      <div className="bs-stage-canvas">
-        {isLoading ? (
-          <div className="bs-stage-loading">
-            <span className="bs-stage-year-stamp">[{era.year}]</span>
-            <p>Connecting to {era.url}...</p>
-          </div>
-        ) : (
-          <>
-            <p className="bs-stage-year-stamp">[{era.year}]</p>
-            <h3 className="bs-stage-heading">{era.preview.heading}</h3>
-            <p className="bs-stage-body">{era.preview.body}</p>
-          </>
-        )}
-      </div>
-    </div>
-  );
+  return null;
 }
 
 export default BrowserViewport;

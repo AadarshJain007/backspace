@@ -6,6 +6,7 @@ function YearSelector({
   hasNext,
   onPrev,
   onNext,
+  onRandom,
 }) {
   return (
     <section className="bs-year-selector" aria-label="Era selector">
@@ -23,6 +24,14 @@ function YearSelector({
       <div className="bs-year-readout">
         <h1 className="bs-year-value">{era.year}</h1>
         <p className="bs-year-era-name">{era.title}</p>
+        <button
+          type="button"
+          className="bs-random-btn"
+          onClick={onRandom}
+          title="Jump to a random era (R)"
+        >
+          Random Era
+        </button>
       </div>
 
       <button

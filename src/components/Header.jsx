@@ -1,6 +1,12 @@
 import './Header.css';
 
-function Header({ currentIndex, totalCount, onOpenIntro }) {
+function Header({
+  currentIndex,
+  totalCount,
+  soundEnabled,
+  onToggleSound,
+  onOpenIntro,
+}) {
   return (
     <header className="bs-header">
       <div className="bs-brand">
@@ -9,12 +15,20 @@ function Header({ currentIndex, totalCount, onOpenIntro }) {
       </div>
 
       <div className="bs-header-meta">
-        <span className="bs-kbd-hint" title="Use Left and Right arrow keys">
-          <kbd>←</kbd> <kbd>→</kbd>
+        <span className="bs-kbd-hint" title="Arrows: navigate · R: random era · M: sound">
+          <kbd>←</kbd> <kbd>→</kbd> <kbd>R</kbd>
         </span>
         <span className="bs-era-counter" aria-label={`Era ${currentIndex + 1} of ${totalCount}`}>
           {currentIndex + 1} / {totalCount}
         </span>
+        <button
+          type="button"
+          className="bs-intro-trigger"
+          onClick={onToggleSound}
+          title="Toggle transition audio (M)"
+        >
+          {soundEnabled ? 'Sound: On' : 'Sound: Off'}
+        </button>
         <button
           type="button"
           className="bs-intro-trigger"
