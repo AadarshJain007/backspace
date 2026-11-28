@@ -9,8 +9,15 @@ import EraIndicator from './components/EraIndicator.jsx';
 import BrowserShell from './browser/BrowserShell.jsx';
 import BrowserViewport from './browser/BrowserViewport.jsx';
 
+function getInitialEraIndex() {
+  if (typeof window === 'undefined') return 0;
+  const hashId = window.location.hash.replace(/^#/, '').toLowerCase();
+  const idx = ERAS.findIndex((e) => e.id === hashId);
+  return idx >= 0 ? idx : 0;
+}
+
 function App() {
-  const [history, setHistory] = useState([0]);
+  const [history, setHistory] = useState(() => [getInitialEraIndex()]);
   const [historyPointer, setHistoryPointer] = useState(0);
   const [showIntro, setShowIntro] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -102,12 +109,35 @@ function App() {
 
   useEffect(() => {
     document.documentElement.style.setProperty('--era-accent', currentEra.accent);
-  }, [currentEra.accent]);
+    if (window.location.hash !== `#${currentEra.id}`) {
+      window.history.replaceState(null, '', `#${currentEra.id}`);
+    }
+  }, [currentEra.accent, currentEra.id]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hashId = window.location.hash.replace(/^#/, '').toLowerCase();
+      const idx = ERAS.findIndex((e) => e.id === hashId);
+      if (idx >= 0 && idx !== currentIndex) {
+        navigateToEra(idx);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [currentIndex, navigateToEra]);
 
   useEffect(() => {
     if (showIntro) return;
 
     const handleKeyDown = (event) => {
+      if (showSecretNote) {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          setShowSecretNote(false);
+        }
+        return;
+      }
+
       const tag = event.target?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
         return;
@@ -133,7 +163,7 @@ function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showIntro, goPrev, goNext, goRandom]);
+  }, [showIntro, showSecretNote, goPrev, goNext, goRandom]);
 
   return (
     <div className="app-layout">

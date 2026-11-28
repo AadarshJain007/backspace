@@ -410,6 +410,9 @@
 }
 
 @media (max-width: 640px) {
+  .w95-banner-table tbody,
+  .w95-banner-table tr,
+  .w95-banner-table td,
   .w95-layout-table tbody,
   .w95-layout-table tr,
   .w95-layout-table td,

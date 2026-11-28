@@ -1,4 +1,6 @@
 .bs-shell {
+  max-width: 100%;
+  min-width: 0;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   background: var(--color-surface);

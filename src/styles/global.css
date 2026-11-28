@@ -1,3 +1,8 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-sans);
   font-size: clamp(0.9375rem, 0.9rem + 0.12vw, 1rem);
